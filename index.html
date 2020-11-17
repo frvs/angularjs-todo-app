@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="myApp" lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="todo.js"></script>
+    <link rel="stylesheet" href="todo.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+<body>
+    <div id="main" ng-controller="TodoListController as todoList">
+        <h2>Todo App</h2>
+        <div>
+            <h3>Adicionar nova tarefa</h3>
+            <form ng-submit="todoList.addTodo()">
+                <input type="text" ng-model="todoList.newTodoText" placeholder="O que fazer hoje?">
+                
+                <button type="submit">
+                    <i class="fas fa-plus-square fa-lg"></i>
+                </button>
+            </form>
+        </div>
+        <div>
+            <h3>
+                Lista de tarefas
+            </h3>
+            <span>
+                {{ todoList.remaining() }} de {{ todoList.total() }} tarefas restantes
+            </span>
+            <ul>
+                <li ng-repeat="todo in todoList.undoneTodos">
+                    <label>
+                        <input ng-click="todoList.markAsDone(todo.id)" type="checkbox" ng-model="todo.done">
+                        <span class="done-{{todo.done}}">{{todo.text}}</span>
+                    </label>
+                </li>
+            </ul>
+        </div>    
+        <div>
+            <h3>Ultimas atividades feitas</h3>
+            <ul>
+                <li ng-repeat="todo in todoList.doneTodos">
+                    <label>
+                        <input ng-click="todoList.markAsUndone(todo.id)" type="checkbox" ng-model="todo.done">
+                        <span class="done-{{todo.done}}">{{todo.text}}</span>
+                    </label>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
